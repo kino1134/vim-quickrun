@@ -25,7 +25,7 @@ function! s:runner.validate() abort
 endfunction
 
 function! s:runner.run(commands, input, session) abort
-  let vimproc = vimproc#pgroup_open(join(a:commands, ' && '))
+  let vimproc = vimproc#pgroup_open(join(a:commands, ' && '), 1)
   call vimproc.stdin.write(a:input)
   call vimproc.stdin.close()
 
@@ -72,10 +72,10 @@ function! s:receive_vimproc_result(key, read_timeout) abort
 
   try
     if !vimproc.stdout.eof
-      call session.output(vimproc.stdout.read(s:bufsize, a:read_timeout))
+      call session.output(substitute(vimproc.stdout.read(s:bufsize, a:read_timeout), "\r\n", "\n", 'g')
     endif
     if !vimproc.stderr.eof
-      call session.output(vimproc.stderr.read(s:bufsize, a:read_timeout))
+      call session.output(substitute(vimproc.stdout.read(s:bufsize, a:read_timeout), "\r\n", "\n", 'g')
     endif
 
     if !(vimproc.stdout.eof && vimproc.stderr.eof)

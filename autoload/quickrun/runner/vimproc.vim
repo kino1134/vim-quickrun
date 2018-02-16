@@ -72,10 +72,10 @@ function! s:receive_vimproc_result(key, read_timeout) abort
 
   try
     if !vimproc.stdout.eof
-      call session.output(substitute(vimproc.stdout.read(s:bufsize, a:read_timeout), "\r\n", "\n", 'g')
+      call session.output(substitute(vimproc.stdout.read(s:bufsize, a:read_timeout), "\r\n", "\n", 'g'))
     endif
     if !vimproc.stderr.eof
-      call session.output(substitute(vimproc.stdout.read(s:bufsize, a:read_timeout), "\r\n", "\n", 'g')
+      call session.output(substitute(vimproc.stdout.read(s:bufsize, a:read_timeout), "\r\n", "\n", 'g'))
     endif
 
     if !(vimproc.stdout.eof && vimproc.stderr.eof)
